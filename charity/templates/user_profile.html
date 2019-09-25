@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+    <header class="header--form-page">
+    {% include 'navigation.html' %}\
+
+    <div class="slogan container container--90">
+        <div class="slogan--item">
+          <h1>
+              Imię: {{ user.first_name }}<br>
+              Nazwisko: {{ user.last_name }}<br>
+              E-mail: {{ user.email }}<br>
+          </h1>
+        </div>
+
+
+      </div>
+    </header>
+    <section id="stats" class="stats">
+        <div class="stats--item">
+            <em>Moje dary:</em>
+        </div><br>
+    <table style="font-size: 20px;
+                  width: 100%;
+                  border-collapse: collapse;"
+                  border="2px solid black";>
+        <thead>
+        <tr>
+            <th>Ilość worków</th>
+            <th>Organizacja</th>
+            <th>Kategorie</th>
+            <th>Data odbioru</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for donations in user.donation_set.all %}
+        <tr>
+            <th>{{ donations.quantity }}</th>
+            <td style="padding: 7px;">{{ donations.institution }}</td>
+            <td style="padding: 7px;">{% for donation in donations.institution.categories.all %}
+                            {{ donation }}
+                        {% endfor %}</td>
+            <td style="padding: 7px;">{{ donations.pick_up_date }}</td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    </section>
+{% endblock %}
