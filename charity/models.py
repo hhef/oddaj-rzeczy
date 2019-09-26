@@ -39,5 +39,6 @@ class Donation(models.Model):
     pick_up_time = models.TimeField()
     pick_up_comment = models.TextField(null=True)
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, default=None, null=True)
+    is_taken = models.BooleanField(default=False)
 
 
