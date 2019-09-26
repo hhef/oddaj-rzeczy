@@ -36,7 +36,7 @@
         <tr>
             <th>{{ donations.quantity }}</th>
             <td style="padding: 7px;">{{ donations.institution }}</td>
-            <td style="padding: 7px;">{% for donation in donations.institution.categories.all %}
+            <td style="padding: 7px;">{% for donation in donations.categories.all %}
                             {{ donation }}
                         {% endfor %}</td>
             <td style="padding: 7px;">{{ donations.pick_up_date }}</td>

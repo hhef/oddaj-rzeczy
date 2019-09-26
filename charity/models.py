@@ -16,6 +16,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 class Institution(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField()
@@ -24,6 +25,7 @@ class Institution(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Donation(models.Model):
     quantity = models.IntegerField()
