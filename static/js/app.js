@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function() {
       });
 
       // Form submit
-      this.$form.querySelector("form").addEventListener("submit", e => this.submit(e));
+      // this.$form.querySelector("form").addEventListener("submit", e => this.submit(e));
     }
 
     /**
@@ -296,7 +296,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   summaryButton.addEventListener("click", function() {
     bagsOutput.innerHTML = bagsInput.value + " worki z darowiznami";
-    // institution input/output
     addressOutput.innerHTML = addressInput.value;
     cityOutput.innerHTML = cityInput.value;
     postcodeOutput.innerHTML = postcodeInput.value;

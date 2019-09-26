@@ -44,8 +44,30 @@ class AddDonation(View):
                                              "institutions": institutions})
 
     def post(self, request):
-        institutions = Institution.objects.all()
-        return render(request, "form.html", {"institutions": institutions})
+        quantity = request.POST["bags"]
+        institution = Institution.objects.get(id=request.POST["organization"])
+        selected_categories = request.POST.getlist("categories")
+        address = request.POST["address"]
+        phone_number = request.POST["phone"]
+        city = request.POST["city"]
+        zip_code = request.POST["postcode"]
+        pick_up_date = request.POST["date"]
+        pick_up_time = request.POST["time"]
+        pick_up_comment = request.POST["more_info"]
+        user = request.user
+        new_donation = Donation.objects.create(quantity=quantity,
+                                               institution=institution,
+                                               address=address,
+                                               phone_number=phone_number,
+                                               city=city,
+                                               zip_code=zip_code,
+                                               pick_up_date=pick_up_date,
+                                               pick_up_time=pick_up_time,
+                                               pick_up_comment=pick_up_comment,
+                                               user=user)
+        for category_id in selected_categories:
+            new_donation.categories.add(category_id)
+        return redirect("/test")
 
 
 class Login(View):
