@@ -122,7 +122,7 @@ class UserProfileView(View):
         return render(request, 'user_profile.html', {"user": user})
 
     def post(self, request, user_id):
-        donation = Donation.objects.get(id=request.POST["taken"])
+        donation = Donation.objects.get(id=request.POST.get("taken"))
         donation.is_taken = True
         donation.save()
         return render(request, 'user_profile.html')
