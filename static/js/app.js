@@ -310,11 +310,4 @@ document.addEventListener("DOMContentLoaded", function() {
     infoOutput.innerHTML = infoInput.value;
 
   });
-
-  takenButton = document.getElementsByName("taken");
-  takenDonation = document.querySelector("#user-donation");
-
-  takenButton.addEventListener("click", function(){
-    takenButton.style.display = 'none'
-  })
 });

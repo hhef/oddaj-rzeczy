@@ -122,7 +122,12 @@ class UserProfileView(View):
         return render(request, 'user_profile.html', {"user": user})
 
     def post(self, request, user_id):
-        donation = Donation.objects.get(id=request.POST.get("taken"))
-        donation.is_taken = True
-        donation.save()
+        if "taken" in request.POST:
+            taken_status = Donation.objects.get(id=request.POST.get("taken"))
+            taken_status.is_taken = True
+            taken_status.save()
+        else:
+            not_taken_status = Donation.objects.get(pk=request.POST.get("not-taken"))
+            not_taken_status.is_taken = False
+            not_taken_status.save()
         return render(request, 'user_profile.html')

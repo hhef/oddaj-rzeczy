@@ -31,21 +31,27 @@
         </thead>
         <tbody>
         {% for donations in user.donation_set.all %}
-        <tr id="user-donation" class="simple-table">
+        <tr class="simple-table">
             <th>{{ donations.quantity }}</th>
             <td>{{ donations.institution }}</td>
             <td>{% for donation in donations.categories.all %}
                             {{ donation }}
                         {% endfor %}</td>
             <td>{{ donations.pick_up_date }}</td>
-            <td>{% if donations.is_taken is False %}
+            {% if donations.is_taken is False %}
+            <td id="donation-status" style="color: red;">
                 Nieodebrane <form method="post">
                     {% csrf_token %}
                     <button type="submit" name="taken" value="{{ donations.id }}">
                     Odebrane</button></form>
                 {% else %}
-                Odebrane
-                {% endif %}</td>
+             <td style="color: green;">
+                Odebrane <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="not-taken" value="{{ donations.id }}">
+                    Nieodebrane</button></form>
+                </td>
+            {% endif %}
         </tr>
         </tbody>
         {% endfor %}

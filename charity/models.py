@@ -28,6 +28,8 @@ class Institution(models.Model):
 
 
 class Donation(models.Model):
+    class Meta:
+        ordering = ["is_taken"]
     quantity = models.IntegerField()
     categories = models.ManyToManyField(Category)
     institution = models.ForeignKey(Institution, on_delete=models.DO_NOTHING)
