@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from charity.views import LandingPage, Login, AddDonation, Register, TestForFormConfirmation, logout_view, \
-    user_profile_view
+    UserProfileView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +26,5 @@ urlpatterns = [
     path('register/', Register.as_view()),
     path('test/', TestForFormConfirmation.as_view()),
     path('logout/', logout_view, name="logout"),
-    path('user/<int:user_id>', user_profile_view)
+    path('user/<int:user_id>', UserProfileView.as_view())
 ]

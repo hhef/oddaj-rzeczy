@@ -19,27 +19,33 @@
         <div class="stats--item">
             <em>Moje dary:</em>
         </div><br>
-    <table style="font-size: 20px;
-                  width: 100%;
-                  border-collapse: collapse;"
-                  border="2px solid black";>
+    <table class="simple-table">
         <thead>
-        <tr>
+        <tr style="color: black;">
             <th>Ilość worków</th>
             <th>Organizacja</th>
             <th>Kategorie</th>
             <th>Data odbioru</th>
+            <th>Odbiór zrealizowany</th>
         </tr>
         </thead>
         <tbody>
         {% for donations in user.donation_set.all %}
-        <tr>
+        <tr id="user-donation" class="simple-table">
             <th>{{ donations.quantity }}</th>
-            <td style="padding: 7px;">{{ donations.institution }}</td>
-            <td style="padding: 7px;">{% for donation in donations.categories.all %}
+            <td>{{ donations.institution }}</td>
+            <td>{% for donation in donations.categories.all %}
                             {{ donation }}
                         {% endfor %}</td>
-            <td style="padding: 7px;">{{ donations.pick_up_date }}</td>
+            <td>{{ donations.pick_up_date }}</td>
+            <td>{% if donations.is_taken is False %}
+                Nieodebrane <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="taken" value="{{ donations.id }}">
+                    Odebrane</button></form>
+                {% else %}
+                Odebrane
+                {% endif %}</td>
         </tr>
         </tbody>
         {% endfor %}

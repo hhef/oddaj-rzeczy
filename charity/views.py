@@ -45,7 +45,7 @@ class AddDonation(View):
 
     def post(self, request):
         quantity = request.POST["bags"]
-        institution = Institution.objects.get(id=request.POST["organization"])
+        institution = Institution.objects.get(name=request.POST["organization"])
         selected_categories = request.POST.getlist("categories")
         address = request.POST["address"]
         phone_number = request.POST["phone"]
@@ -116,6 +116,13 @@ def logout_view(request):
     return redirect("/")
 
 
-def user_profile_view(request, user_id):
-    user = User.objects.get(id=user_id)
-    return render(request, 'user_profile.html', {"user":user})
+class UserProfileView(View):
+    def get(self,request, user_id):
+        user = User.objects.get(id=user_id)
+        return render(request, 'user_profile.html', {"user": user})
+
+    def post(self, request, user_id):
+        donation = Donation.objects.get(id=request.POST["taken"])
+        donation.is_taken = True
+        donation.save()
+        return render(request, 'user_profile.html')

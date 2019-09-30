@@ -276,7 +276,7 @@ document.addEventListener("DOMContentLoaded", function() {
   var summaryButton = document.querySelector("#donation-summary");
   var bagsInput = document.querySelector("input[name='bags']");
   var bagsOutput = document.querySelector("#bags-output");
-  var institutionInput = document.querySelector("input[name='organization']:checked");
+  var institutionInput = document.querySelectorAll("input[name='organization']");
   var institutionOutput = document.querySelector("#institution-output");
   var addressInput = document.querySelector("input[name='address']");
   var addressOutput = document.querySelector("#address");
@@ -295,6 +295,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
   summaryButton.addEventListener("click", function() {
+    for (i=0; i<institutionInput.length;i++ ){
+      if (institutionInput[i].checked) {
+        institutionOutput.innerHTML = institutionInput[i].value
+      }
+    }
     bagsOutput.innerHTML = bagsInput.value + " worki z darowiznami";
     addressOutput.innerHTML = addressInput.value;
     cityOutput.innerHTML = cityInput.value;
@@ -305,4 +310,11 @@ document.addEventListener("DOMContentLoaded", function() {
     infoOutput.innerHTML = infoInput.value;
 
   });
+
+  takenButton = document.getElementsByName("taken");
+  takenDonation = document.querySelector("#user-donation");
+
+  takenButton.addEventListener("click", function(){
+    takenButton.style.display = 'none'
+  })
 });
