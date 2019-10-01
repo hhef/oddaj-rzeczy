@@ -4,6 +4,7 @@ from charity.models import Institution, Donation, Category
 from django.db.models import Sum
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User, auth
+from django.http import HttpResponse
 
 
 class LandingPage(View):
@@ -135,12 +136,15 @@ class UserSettingsView(View):
     def post(self, request, user_id):
         if "change-data" in request.POST:
             user = User.objects.get(id=user_id)
-            user.first_name = request.POST["name"]
-            user.last_name = request.POST["surname"]
-            user.email = request.POST["email"]
-            user.username = request.POST["email"]
-            user.save()
-            return redirect(f"/user/{user_id}")
+            if user.check_password(request.POST["password"]):
+                user.first_name = request.POST["name"]
+                user.last_name = request.POST["surname"]
+                user.email = request.POST["email"]
+                user.username = request.POST["email"]
+                user.save()
+                return redirect(f"/user/{user_id}")
+            else:
+                return HttpResponse("Nieprawidłowe hasło")
         else:
             user = User.objects.get(id=user_id)
             new_password = request.POST["new_password"]
@@ -149,3 +153,7 @@ class UserSettingsView(View):
                     user.set_password(new_password)
                     user.save()
                     return redirect(f"/user/{user_id}")
+                else:
+                    return HttpResponse("Nieprawidłowe hasło")
+            else:
+                return HttpResponse("Nieprawidłowe hasło")
