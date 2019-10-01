@@ -4,7 +4,6 @@ from charity.models import Institution, Donation, Category
 from django.db.models import Sum
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User, auth
-from charity.forms import UserSettingsForm
 
 
 class LandingPage(View):
@@ -131,13 +130,22 @@ class UserProfileView(View):
 
 class UserSettingsView(View):
     def get(self, request, user_id):
-        form = UserSettingsForm()
-        user = User.objects.get(id=user_id)
-        return render(request, "user_settings.html", {"user":user,
-                                                      "form":form})
+        return render(request, "user_settings.html")
 
     def post(self, request, user_id):
-        form = UserSettingsForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect(f"/settings/{user_id}")
+        if "change-data" in request.POST:
+            user = User.objects.get(id=user_id)
+            user.first_name = request.POST["name"]
+            user.last_name = request.POST["surname"]
+            user.email = request.POST["email"]
+            user.username = request.POST["email"]
+            user.save()
+            return redirect(f"/user/{user_id}")
+        else:
+            user = User.objects.get(id=user_id)
+            new_password = request.POST["new_password"]
+            if user.check_password(request.POST["old_password"]):
+                if new_password == request.POST["new_password2"]:
+                    user.set_password(new_password)
+                    user.save()
+                    return redirect(f"/user/{user_id}")
