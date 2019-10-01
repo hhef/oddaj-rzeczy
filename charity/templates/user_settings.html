@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+    <header class="header--form-page">
+    {% include 'navigation.html' %}\
+
+    <div class="slogan container container--90">
+        <div class="slogan--item">
+            <section class="login-page">
+                <h2>Zmień dane:</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.as_p }}
+                    </div>
+                    <div class="form-group form-group--buttons">
+                        <button class="btn" name="change-data" type="submit">Zmień dane</button>
+                    </div>
+              </form>
+                <h2>Zmień hasło:</h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="password" name="old-password" placeholder="Aktualne hasło" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" placeholder="Hasło" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password2" placeholder="Powtórz hasło" />
+                    </div>
+                    <div class="form-group form-group--buttons">
+                        <button class="btn" name="change-password" type="submit">Zmień hasło</button>
+                    </div>
+              </form>
+            </section>
+        </div>
+
+
+      </div>
+    </header>
+{% endblock %}

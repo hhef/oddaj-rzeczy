@@ -4,6 +4,7 @@ from charity.models import Institution, Donation, Category
 from django.db.models import Sum
 from django.core.paginator import Paginator
 from django.contrib.auth.models import User, auth
+from charity.forms import UserSettingsForm
 
 
 class LandingPage(View):
@@ -106,11 +107,6 @@ class Register(View):
         return redirect("/login")
 
 
-class TestForFormConfirmation(View):
-    def get(self, request):
-        return render(request, "form-confirmation.html")
-
-
 def logout_view(request):
     auth.logout(request)
     return redirect("/")
@@ -131,3 +127,17 @@ class UserProfileView(View):
             not_taken_status.is_taken = False
             not_taken_status.save()
         return render(request, 'user_profile.html')
+
+
+class UserSettingsView(View):
+    def get(self, request, user_id):
+        form = UserSettingsForm()
+        user = User.objects.get(id=user_id)
+        return render(request, "user_settings.html", {"user":user,
+                                                      "form":form})
+
+    def post(self, request, user_id):
+        form = UserSettingsForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect(f"/settings/{user_id}")
