@@ -30,6 +30,7 @@ class Institution(models.Model):
 class Donation(models.Model):
     class Meta:
         ordering = ["is_taken"]
+
     quantity = models.IntegerField()
     categories = models.ManyToManyField(Category)
     institution = models.ForeignKey(Institution, on_delete=models.DO_NOTHING)
@@ -42,5 +43,3 @@ class Donation(models.Model):
     pick_up_comment = models.TextField(null=True)
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, default=None, null=True)
     is_taken = models.BooleanField(default=False)
-
-

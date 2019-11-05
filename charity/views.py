@@ -8,8 +8,9 @@ from django.http import HttpResponse
 
 
 class LandingPage(View):
-    def get(self,request):
-        bags = list(Donation.objects.aggregate(Sum('quantity')).values())[0]    # robimy listę i wyciągamy pierwszy element
+    def get(self, request):
+        bags = list(Donation.objects.aggregate(Sum('quantity')).values())[
+                   0] or 0  # robimy listę i wyciągamy pierwszy element
         institutions = Donation.objects.values('institution_id')
         institution_list = []
         for inst in institutions:
@@ -30,18 +31,18 @@ class LandingPage(View):
         paginator_local = Paginator(local_list, 2)
         page_local = request.GET.get("page")
         local = paginator_local.get_page(page_local)
-        return render(request, 'index.html', {"bags":bags,
+        return render(request, 'index.html', {"bags": bags,
                                               "institution_count": institution_count,
                                               "foundations": foundations,
-                                              "nongov_organizations":nongov_organizations,
-                                              "local":local})
+                                              "nongov_organizations": nongov_organizations,
+                                              "local": local})
 
 
 class AddDonation(View):
     def get(self, request):
         categories = Category.objects.all()
         institutions = Institution.objects.all()
-        return render(request, "form.html", {"categories":categories,
+        return render(request, "form.html", {"categories": categories,
                                              "institutions": institutions})
 
     def post(self, request):
@@ -113,7 +114,7 @@ def logout_view(request):
 
 
 class UserProfileView(View):
-    def get(self,request, user_id):
+    def get(self, request, user_id):
         user = User.objects.get(id=user_id)
         return render(request, 'user_profile.html', {"user": user})
 
