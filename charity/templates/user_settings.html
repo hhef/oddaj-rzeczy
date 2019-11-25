@@ -2,10 +2,9 @@
 {% block content %}
     <header class="header--form-page">
     {% include 'navigation.html' %}
-
+    <br>
     <div class="slogan container container--90">
         <div class="slogan--item">
-            <section class="login-page">
                 <h2>Zmień dane:</h2>
                 <form method="POST">
                     {% csrf_token %}
@@ -42,7 +41,6 @@
                         <button class="btn" name="change-password" type="submit">Zmień hasło</button>
                     </div>
               </form>
-            </section>
         </div>
 
 
