@@ -69,7 +69,7 @@ class AddDonation(View):
                                                user=user)
         for category_id in selected_categories:
             new_donation.categories.add(category_id)
-        return redirect("/test")
+        return render(request, "user_profile.html")
 
 
 class Login(View):
